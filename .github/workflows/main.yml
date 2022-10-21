@@ -1,9 +1,6 @@
 name: KMM Bridge Publish Release
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "main"
 
 jobs:
   call-kmmbridge-publish:
