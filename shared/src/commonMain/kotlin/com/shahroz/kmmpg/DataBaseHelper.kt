@@ -10,4 +10,8 @@ internal class DataBaseHelper(databaseDriverFactory: DatabaseDriverFactory) {
     internal fun getAllPlayers(): List<HockeyPlayer> {
         return dbQuery.selectAll(mapper = ::HockeyPlayer).executeAsList()
     }
+
+    internal fun insertDummyPlayer() {
+        dbQuery.insertFullPlayerObject()
+    }
 }
