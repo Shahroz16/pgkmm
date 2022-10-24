@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.7.20"
+    id("com.squareup.sqldelight")
     id("com.android.library")
     id("co.touchlab.faktory.kmmbridge") version "0.3.0"
 }
@@ -11,6 +12,12 @@ kmmbridge {
     githubReleaseVersions()
     spm()
     versionPrefix.set("1.0")
+}
+
+sqldelight {
+    database("AppDatabase") {
+        packageName = "com.shahroz.kmmpg.cache"
+    }
 }
 
 kotlin {
@@ -31,6 +38,7 @@ kotlin {
 
     sourceSets {
         val ktorVersion = "2.1.2"
+        val sqlDelightVersion = "1.5.3"
 
         val commonMain by getting {
             dependencies {
@@ -41,6 +49,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
             }
         }
         val commonTest by getting {
@@ -51,6 +60,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val androidTest by getting
@@ -64,6 +74,7 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
             }
         }
         val iosX64Test by getting
